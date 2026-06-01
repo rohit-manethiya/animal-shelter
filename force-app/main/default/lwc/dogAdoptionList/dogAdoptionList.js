@@ -1,8 +1,8 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
-import getAvailableDogs from '@salesforce/apex/DogAdoptionController.getAvailableDogs';
-import requestAdoption  from '@salesforce/apex/DogAdoptionController.requestAdoption';
+import getAvailableDogs from '@salesforce/apex/PublicDogAdoptionController.getAvailableDogs';
+import requestAdoption  from '@salesforce/apex/PublicDogAdoptionController.requestAdoption';
 
 const PAGE_SIZE = 12;
 

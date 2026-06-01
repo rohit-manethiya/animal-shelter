@@ -1,0 +1,119 @@
+<template>
+    <div class="container">
+        <h1>🏥 Shelter Staff Dashboard</h1>
+
+        <!-- Tabs -->
+        <lightning-tabset active-tab-value={activeTab} onactive={handleTabChange}>
+
+            <!-- Dogs Tab -->
+            <lightning-tab label="🐕 My Shelter Dogs" value="dogs">
+                <div class="tab-content">
+                    <!-- Search -->
+                    <div class="search-box">
+                        <input
+                            type="search"
+                            placeholder="Search by name or breed..."
+                            class="search-input"
+                            onchange={handleSearch}>
+                        <span class="badge">Total: {totalCount}</span>
+                    </div>
+
+                    <!-- Loading -->
+                    <template if:true={isLoading}>
+                        <div class="loading">
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>
+                    </template>
+
+                    <!-- Error -->
+                    <template if:true={hasError}>
+                        <div class="error-message">
+                            ❌ {errorMessage}
+                        </div>
+                    </template>
+
+                    <!-- Dogs List -->
+                    <template if:true={hasDogs}>
+                        <div class="dogs-grid">
+                            <template for:each={dogs} for:item="dog">
+                                <div key={dog.Id} class="dog-card">
+                                    <template if:true={dog.Image_URL__c}>
+                                        <img src={dog.Image_URL__c} alt={dog.Name} class="dog-image">
+                                    </template>
+                                    <div class="dog-info">
+                                        <h3>{dog.Name}</h3>
+                                        <p><strong>Breed:</strong> {dog.Breed__c}</p>
+                                        <p><strong>Age:</strong> {dog.Age__c} years</p>
+                                        <p><strong>Status:</strong> <span class="status-badge">{dog.Status__c}</span></p>
+                                        <p class="description">{dog.Description__c}</p>
+                                        <p class="shelter-info">📍 {dog.Shelter_Facility__r.Name}</p>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination">
+                            <span>{resultLabel}</span>
+                            <button class="btn-prev" onclick={handlePrevPage} disabled={isPrevDisabled}>
+                                ← Previous
+                            </button>
+                            <button class="btn-next" onclick={handleNextPage} disabled={isNextDisabled}>
+                                Next →
+                            </button>
+                        </div>
+                    </template>
+
+                    <!-- No Dogs -->
+                    <template if:false={hasDogs}>
+                        <template if:false={isLoading}>
+                            <div class="empty-state">
+                                <h3>🐕 No dogs in your shelter</h3>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </lightning-tab>
+
+            <!-- Requests Tab -->
+            <lightning-tab label={requestsLabel} value="requests">
+                <div class="tab-content">
+                    <template if:true={hasPendingRequests}>
+                        <table class="requests-table">
+                            <thead>
+                                <tr>
+                                    <th>Request #</th>
+                                    <th>Dog</th>
+                                    <th>Adopter</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={pendingRequests} for:item="request">
+                                    <tr key={request.requestId}>
+                                        <td><strong>{request.name}</strong></td>
+                                        <td>{request.dogName} ({request.breed})</td>
+                                        <td>{request.adopterName}</td>
+                                        <td><a href="mailto:{request.adopterEmail}">{request.adopterEmail}</a></td>
+                                        <td>{request.adopterPhone}</td>
+                                        <td>{request.requestDate}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+
+                    <!-- No Requests -->
+                    <template if:false={hasPendingRequests}>
+                        <div class="empty-state">
+                            <h3>✅ No pending approval requests</h3>
+                        </div>
+                    </template>
+                </div>
+            </lightning-tab>
+
+        </lightning-tabset>
+    </div>
+</template>

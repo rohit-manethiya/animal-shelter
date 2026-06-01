@@ -9,8 +9,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>dogAdoptionList</componentName>
-                <identifier>dogAdoptionList_0</identifier>
+                <componentName>shelterStaffDashboard</componentName>
+                <identifier>shelterStaffDashboard_0</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
