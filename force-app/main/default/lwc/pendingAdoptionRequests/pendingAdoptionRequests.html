@@ -1,0 +1,85 @@
+<template>
+    <lightning-card icon-name="utility:approval">
+
+        <div slot="title">
+            Pending Adoption Requests
+            <template lwc:if={hasPending}>
+                <lightning-badge label={pendingCount} class="slds-m-left_x-small"></lightning-badge>
+            </template>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_medium">
+                    <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <template lwc:elseif={hasPending}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col"><div class="slds-truncate">Request #</div></th>
+                            <th scope="col"><div class="slds-truncate">Dog</div></th>
+                            <th scope="col"><div class="slds-truncate">Adopter</div></th>
+                            <th scope="col"><div class="slds-truncate">Email</div></th>
+                            <th scope="col"><div class="slds-truncate">Date</div></th>
+                            <th scope="col"><div class="slds-truncate">Action</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={pendingRequests} for:item="req">
+                            <tr key={req.workItemId}>
+                                <td><div class="slds-truncate">{req.name}</div></td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        {req.dogName}
+                                        <span class="slds-text-color_weak slds-m-left_xx-small">
+                                            {req.breed}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td><div class="slds-truncate">{req.adopterName}</div></td>
+                                <td><div class="slds-truncate">{req.adopterEmail}</div></td>
+                                <td><div class="slds-truncate">{req.requestDate}</div></td>
+                                <td>
+                                    <lightning-button
+                                        label="Approve"
+                                        variant="success"
+                                        data-id={req.workItemId}
+                                        data-action="Approve"
+                                        onclick={handleAction}
+                                        disabled={req.isProcessing}
+                                        class="slds-m-right_x-small">
+                                    </lightning-button>
+                                    <lightning-button
+                                        label="Reject"
+                                        variant="destructive-text"
+                                        data-id={req.workItemId}
+                                        data-action="Reject"
+                                        onclick={handleAction}
+                                        disabled={req.isProcessing}>
+                                    </lightning-button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+
+            <template lwc:else>
+                <div class="slds-align_absolute-center slds-p-around_medium">
+                    <lightning-icon
+                        icon-name="utility:check"
+                        variant="success"
+                        size="small"
+                        class="slds-m-right_x-small">
+                    </lightning-icon>
+                    <span class="slds-text-color_weak">No pending requests — all caught up!</span>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Region_City_Match</fullName>
+    <active>true</active>
+    <description>Ensures the selected City matches the Region. City must be within the region.</description>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(TEXT(Region__c))),
+    NOT(ISBLANK(TEXT(City__c))),
+    OR(
+        AND(TEXT(Region__c) = "India", NOT(OR(TEXT(City__c)="Bangalore", TEXT(City__c)="Delhi", TEXT(City__c)="Jaipur", TEXT(City__c)="Mumbai"))),
+        AND(TEXT(Region__c) = "Netherlands", NOT(OR(TEXT(City__c)="Amsterdam", TEXT(City__c)="Rotterdam")))
+    )
+)</errorConditionFormula>
+    <errorMessage>Invalid Region-City combination. Please select a city that belongs to the selected region. India: Bangalore, Delhi, Jaipur, Mumbai | Netherlands: Amsterdam, Rotterdam</errorMessage>
+</ValidationRule>

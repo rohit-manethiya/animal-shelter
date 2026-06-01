@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Shelter_Facility__c</fullName>
+    <label>Shelter Facility</label>
+    <referenceTo>Shelter_Facility__c</referenceTo>
+    <relationshipLabel>Dogs</relationshipLabel>
+    <relationshipName>Dogs</relationshipName>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

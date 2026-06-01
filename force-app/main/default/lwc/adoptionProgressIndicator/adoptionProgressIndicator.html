@@ -1,0 +1,43 @@
+<template>
+    <div class="progress-container">
+        <div class="progress-header">
+            <h3 class="slds-text-heading_small">Adoption Progress</h3>
+            <span class={statusClass}>
+                <lightning-icon icon-name={statusIcon} size="x-small"></lightning-icon>
+                <span class="slds-m-left_x-small">{currentStage}</span>
+            </span>
+        </div>
+
+        <div class="progress-bar">
+            <template for:each={stages} for:item="stage">
+                <div
+                    key={stage.name}
+                    class="stage-item"
+                    data-stage={stage.name}>
+
+                    <!-- Stage circle indicator -->
+                    <div class="stage-circle" data-is-current={stage.isCurrent} data-is-complete={stage.isComplete} data-is-rejected={stage.isRejected}>
+                        <template lwc:if={stage.isComplete}>
+                            <lightning-icon icon-name="utility:check" size="small" class="checkmark"></lightning-icon>
+                        </template>
+                        <template lwc:elseif={stage.isRejected}>
+                            <lightning-icon icon-name="utility:close" size="small" class="rejected-icon"></lightning-icon>
+                        </template>
+                        <template lwc:else>
+                            <span class="stage-number">{stage.order}</span>
+                        </template>
+                    </div>
+
+                    <!-- Connecting line (not shown after last stage) -->
+                    <template lwc:if={stage.order}>
+                        <div class="stage-line" data-is-complete={stage.isComplete}></div>
+                    </template>
+
+                    <!-- Stage label -->
+                    <div class="stage-label">{stage.label}</div>
+
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <defaultLandingTab>Adoption_List</defaultLandingTab>
+    <description>Adyen Animal Shelter - Dog Adoption Management</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isServiceCloudConsole>false</isServiceCloudConsole>
+    <label>Animal Shelter</label>
+    <navType>Standard</navType>
+    <tabs>Adoption_List</tabs>
+    <tabs>Dog__c</tabs>
+    <tabs>Adoption_Request__c</tabs>
+    <tabs>Shelter_Facility__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

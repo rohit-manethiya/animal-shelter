@@ -1,0 +1,52 @@
+<template>
+    <div class="dog-card">
+
+        <div class="dog-card__image-wrap">
+            <template lwc:if={dog.Image_URL__c}>
+                <img
+                    src={dog.Image_URL__c}
+                    alt={dog.Name}
+                    class="dog-card__image"
+                    onerror={handleImageError} />
+            </template>
+            <template lwc:else>
+                <div class="dog-card__placeholder">
+                    <lightning-icon
+                        icon-name="utility:animal_and_nature"
+                        size="large"
+                        alternative-text="Dog photo">
+                    </lightning-icon>
+                </div>
+            </template>
+        </div>
+
+        <div class="dog-card__body">
+            <h3 class="slds-text-heading_small dog-card__name">{dog.Name}</h3>
+            <p class="slds-text-body_small slds-text-color_weak">{dog.Breed__c}</p>
+            <p class="slds-text-body_small">{ageLabel}</p>
+
+            <template lwc:if={dog.Description__c}>
+                <p class="slds-text-body_small dog-card__description slds-m-top_x-small">
+                    {dog.Description__c}
+                </p>
+            </template>
+
+            <template lwc:if={hasFacility}>
+                <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                    <lightning-icon icon-name="utility:location" size="xx-small"></lightning-icon>
+                    <span class="slds-m-left_xx-small">{facilityLabel}</span>
+                </p>
+            </template>
+        </div>
+
+        <div class="dog-card__footer">
+            <lightning-button
+                label="Adopt Me!"
+                variant="brand"
+                class="slds-size_full"
+                onclick={handleAdoptClick}>
+            </lightning-button>
+        </div>
+
+    </div>
+</template>

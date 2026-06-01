@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Region__c</fullName>
+    <description>Geographic region of this shelter facility. Restricted to values in the Animal Shelter Regions global value set — add new countries there to expand coverage with no deployment.</description>
+    <label>Region</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>AnimalShelterRegions</valueSetName>
+    </valueSet>
+</CustomField>
