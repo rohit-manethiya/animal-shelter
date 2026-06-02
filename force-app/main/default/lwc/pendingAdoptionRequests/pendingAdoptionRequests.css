@@ -1,0 +1,53 @@
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.8125rem;
+    color: #5e5c66;
+}
+
+.waiting-cell {
+    display: flex;
+    align-items: center;
+}
+
+.days-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.days-badge-normal {
+    background-color: #e3f5e1;
+    color: #2e7d32;
+}
+
+.days-badge-warning {
+    background-color: #fff3cd;
+    color: #7d5a00;
+}
+
+.days-badge-critical {
+    background-color: #fde8e8;
+    color: #ba0517;
+}
+
+.request-row-warning td {
+    background-color: #fffbf0 !important;
+}
+
+.request-row-critical td {
+    background-color: #fff5f5 !important;
+}
+
+.action-cell {
+    display: flex;
+    align-items: center;
+    min-height: 2rem;
+    gap: 0.25rem;
+}

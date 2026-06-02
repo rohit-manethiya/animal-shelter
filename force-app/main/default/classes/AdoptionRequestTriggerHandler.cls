@@ -11,6 +11,7 @@ public class AdoptionRequestTriggerHandler extends TriggerHandler {
     protected override void afterInsert() {
         syncDogStatus(newRequests, null);
         AdoptionEmailService.sendOnSubmission(newRequests);
+        System.enqueueJob(new AdoptionRequestNotificationQueueable(newRequests));
     }
 
     protected override void afterUpdate() {

@@ -17,6 +17,24 @@
             </template>
 
             <template lwc:elseif={hasPending}>
+                <div class="sort-controls">
+                    <span>Sort:</span>
+                    <lightning-button-group>
+                        <lightning-button
+                            label="Oldest First"
+                            variant={oldestVariant}
+                            data-sort="asc"
+                            onclick={handleSortChange}>
+                        </lightning-button>
+                        <lightning-button
+                            label="Newest First"
+                            variant={newestVariant}
+                            data-sort="desc"
+                            onclick={handleSortChange}>
+                        </lightning-button>
+                    </lightning-button-group>
+                </div>
+
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
                     <thead>
                         <tr class="slds-line-height_reset">
@@ -24,43 +42,53 @@
                             <th scope="col"><div class="slds-truncate">Dog</div></th>
                             <th scope="col"><div class="slds-truncate">Adopter</div></th>
                             <th scope="col"><div class="slds-truncate">Email</div></th>
-                            <th scope="col"><div class="slds-truncate">Date</div></th>
+                            <th scope="col"><div class="slds-truncate">Waiting</div></th>
                             <th scope="col"><div class="slds-truncate">Action</div></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <template for:each={pendingRequests} for:item="req">
-                            <tr key={req.workItemId}>
-                                <td><div class="slds-truncate">{req.name}</div></td>
+                        <template for:each={sortedRequests} for:item="req">
+                            <tr key={req.workItemId} class={req.rowClass}>
+                                <td><div class="slds-truncate"><strong>{req.name}</strong></div></td>
                                 <td>
                                     <div class="slds-truncate">
                                         {req.dogName}
-                                        <span class="slds-text-color_weak slds-m-left_xx-small">
-                                            {req.breed}
-                                        </span>
+                                        <span class="slds-text-color_weak slds-m-left_xx-small">({req.breed})</span>
                                     </div>
                                 </td>
                                 <td><div class="slds-truncate">{req.adopterName}</div></td>
-                                <td><div class="slds-truncate">{req.adopterEmail}</div></td>
-                                <td><div class="slds-truncate">{req.requestDate}</div></td>
                                 <td>
-                                    <lightning-button
-                                        label="Approve"
-                                        variant="success"
-                                        data-id={req.workItemId}
-                                        data-action="Approve"
-                                        onclick={handleAction}
-                                        disabled={req.isProcessing}
-                                        class="slds-m-right_x-small">
-                                    </lightning-button>
-                                    <lightning-button
-                                        label="Reject"
-                                        variant="destructive-text"
-                                        data-id={req.workItemId}
-                                        data-action="Reject"
-                                        onclick={handleAction}
-                                        disabled={req.isProcessing}>
-                                    </lightning-button>
+                                    <div class="slds-truncate">
+                                        <a href="mailto:{req.adopterEmail}">{req.adopterEmail}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="waiting-cell">
+                                        <span class={req.daysBadgeClass}>{req.daysWaitingLabel}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="action-cell">
+                                        <template lwc:if={req.isProcessing}>
+                                            <lightning-spinner size="x-small" alternative-text="Processing"></lightning-spinner>
+                                        </template>
+                                        <template lwc:else>
+                                            <lightning-button
+                                                label="Approve"
+                                                variant="success"
+                                                data-id={req.workItemId}
+                                                data-action="Approve"
+                                                onclick={handleAction}>
+                                            </lightning-button>
+                                            <lightning-button
+                                                label="Reject"
+                                                variant="destructive-text"
+                                                data-id={req.workItemId}
+                                                data-action="Reject"
+                                                onclick={handleAction}>
+                                            </lightning-button>
+                                        </template>
+                                    </div>
                                 </td>
                             </tr>
                         </template>
