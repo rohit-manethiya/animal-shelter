@@ -19,7 +19,8 @@ public class ShelterNotificationQueueable implements Queueable, Database.AllowsC
         List<Dog__c> dogs = [
             SELECT Id, Name, Breed__c, Age__c, Image_URL__c, Status__c,
                    Shelter_Facility__r.Endpoint_URL__c,
-                   Shelter_Facility__r.Active__c
+                   Shelter_Facility__r.Active__c,
+                   Shelter_Facility__r.Name
             FROM   Dog__c
             WHERE  Id IN :dogIds
         ];

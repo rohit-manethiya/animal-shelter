@@ -1,0 +1,109 @@
+<template>
+    <div class="slds-p-around_medium">
+
+        <template lwc:if={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_large">
+                <lightning-spinner alternative-text="Saving..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:else>
+
+            <div class="slds-form slds-form_stacked">
+
+                <div class="slds-form-element slds-m-bottom_small">
+                    <lightning-input
+                        label="Dog Name"
+                        value={name}
+                        onchange={handleChange}
+                        data-field="name"
+                        required>
+                    </lightning-input>
+                </div>
+
+                <div class="slds-form-element slds-m-bottom_small">
+                    <label class="slds-form-element__label">
+                        <abbr class="slds-required" title="required">*</abbr>
+                        Breed
+                    </label>
+                    <div class="slds-form-element__control">
+                        <lightning-combobox
+                            name="breed"
+                            value={breed}
+                            options={breedOptions}
+                            placeholder="Select a breed..."
+                            onchange={handleBreedChange}
+                            required>
+                        </lightning-combobox>
+                    </div>
+                </div>
+
+                <div class="slds-form-element slds-m-bottom_small">
+                    <lightning-input
+                        type="number"
+                        label="Age (years)"
+                        value={age}
+                        onchange={handleChange}
+                        data-field="age"
+                        min="0"
+                        max="30">
+                    </lightning-input>
+                </div>
+
+                <div class="slds-form-element slds-m-bottom_small">
+                    <lightning-combobox
+                        label="Status"
+                        value={status}
+                        options={statusOptions}
+                        onchange={handleStatusChange}>
+                    </lightning-combobox>
+                </div>
+
+                <div class="slds-form-element slds-m-bottom_small">
+                    <lightning-input
+                        label="Image URL"
+                        value={imageUrl}
+                        onchange={handleChange}
+                        data-field="imageUrl"
+                        type="url"
+                        placeholder="https://...">
+                    </lightning-input>
+                </div>
+
+                <div class="slds-form-element slds-m-bottom_small">
+                    <lightning-textarea
+                        label="Description"
+                        value={description}
+                        onchange={handleChange}
+                        data-field="description"
+                        max-length="1000">
+                    </lightning-textarea>
+                </div>
+
+                <div class="slds-form-element slds-m-bottom_medium">
+                    <lightning-record-picker
+                        label="Shelter Facility"
+                        object-api-name="Shelter_Facility__c"
+                        value={shelterFacilityId}
+                        onchange={handleShelterChange}
+                        required>
+                    </lightning-record-picker>
+                </div>
+
+            </div>
+
+            <div class="slds-modal__footer slds-m-top_small">
+                <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+                <lightning-button
+                    label="Save Dog"
+                    variant="brand"
+                    onclick={handleSave}
+                    class="slds-m-left_x-small"
+                    disabled={isSaveDisabled}>
+                </lightning-button>
+            </div>
+
+        </template>
+
+    </div>
+</template>

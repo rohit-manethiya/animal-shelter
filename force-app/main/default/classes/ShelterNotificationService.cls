@@ -13,21 +13,21 @@ public class ShelterNotificationService {
     public static void notifyShelter(Dog__c dog, String endpointUrl) {
         if (String.isBlank(endpointUrl)) return;
 
-        Map<String, Object> payload = new Map<String, Object>{
-            'salesforceId' => dog.Id,
-            'name'         => dog.Name,
-            'breed'        => dog.Breed__c,
-            'age'          => dog.Age__c,
-            'imageUrl'     => dog.Image_URL__c,
-            'status'       => dog.Status__c,
-            'event'        => 'DOG_RECORD_CREATED'
-        };
+        String payload = JSON.serialize(new Map<String, Object>{
+            'salesforceDogId' => dog.Id,
+            'name' => dog.Name,
+            'breed' => dog.Breed__c,
+            'age' => (Integer) dog.Age__c,
+            'imageUrl' => dog.Image_URL__c,
+            'status' => dog.Status__c,
+            'originShelter' => dog.Shelter_Facility__r?.Name
+        });
 
         HttpRequest req = new HttpRequest();
         req.setEndpoint(endpointUrl);
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/json');
-        req.setBody(JSON.serialize(payload));
+        req.setBody(payload);
         req.setTimeout(10000);
 
         HttpResponse res = new Http().send(req);
